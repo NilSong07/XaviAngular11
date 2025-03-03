@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UsersService } from '@feature/users/create-user/shared/services/users/users.service';
 
 @Component({
   selector: 'app-create-user',
@@ -8,12 +9,31 @@ import { Router } from '@angular/router';
 })
 export class CreateUserComponent implements OnInit {
 
+  name: string = '';
+  job: string = '';
+  successMessage: string = '';
+
   constructor(
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly usersService: UsersService
   ) {
   }
+  
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+  }
+
+  onSubmit(): void {
+    if (this.name && this.job) {
+      this.usersService.createUser(this.name, this.job).subscribe({
+        next: (response) => {
+          this.successMessage = `User ${response.name} created successfully!`;
+          setTimeout(() => this.redirectToListUsers(), 2000);
+        },
+        error: (err) => {
+          console.error('Error creating user:', err);
+        },
+      });
+    }
   }
 
   /**

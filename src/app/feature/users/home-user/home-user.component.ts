@@ -10,6 +10,7 @@ export class HomeUserComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log('HomeUserComponent inicializado');
   }
 
 }

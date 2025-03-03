@@ -2,3 +2,30 @@
   Recuerde conservar los id, no deben ser modificados
   ids = user-create__name, user-create__name-error, user-create__job, user-create__job-error, user-create__btn-create
 -->
+<div class="create-user-container">
+  <h2>Create User</h2>
+
+  <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+    <div class="form-group">
+      <label for="user-create__name">Name</label>
+      <input id="user-create__name" type="text" [(ngModel)]="name" name="name" required #nameInput="ngModel" />
+      <span id="user-create__name-error" class="error" *ngIf="nameInput.invalid && nameInput.touched">
+        Name is required
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label for="user-create__job">Job</label>
+      <input id="user-create__job" type="text" [(ngModel)]="job" name="job" required #jobInput="ngModel" />
+      <span id="user-create__job-error" class="error" *ngIf="jobInput.invalid && jobInput.touched">
+        Job is required
+      </span>
+    </div>
+
+    <button id="user-create__btn-create" type="submit" [disabled]="userForm.invalid">
+      Create User
+    </button>
+  </form>
+
+  <p *ngIf="successMessage" class="success">{{ successMessage }}</p>
+</div>
