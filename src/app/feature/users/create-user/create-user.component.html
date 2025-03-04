@@ -9,7 +9,7 @@
     <div class="form-group">
       <label for="user-create__name">Name</label>
       <input id="user-create__name" type="text" [(ngModel)]="name" name="name" required #nameInput="ngModel" />
-      <span id="user-create__name-error" class="error" *ngIf="nameInput.invalid && nameInput.touched">
+      <span id="user-create__name-error" class="error" *ngIf="nameInput.invalid">
         Name is required
       </span>
     </div>
@@ -17,7 +17,7 @@
     <div class="form-group">
       <label for="user-create__job">Job</label>
       <input id="user-create__job" type="text" [(ngModel)]="job" name="job" required #jobInput="ngModel" />
-      <span id="user-create__job-error" class="error" *ngIf="jobInput.invalid && jobInput.touched">
+      <span id="user-create__job-error" class="error" *ngIf="jobInput.invalid">
         Job is required
       </span>
     </div>

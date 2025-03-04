@@ -18,7 +18,7 @@ export class CreateUserComponent implements OnInit {
     private readonly usersService: UsersService
   ) {
   }
-  
+
   ngOnInit(): void {
   }
 
@@ -27,7 +27,7 @@ export class CreateUserComponent implements OnInit {
       this.usersService.createUser(this.name, this.job).subscribe({
         next: (response) => {
           this.successMessage = `User ${response.name} created successfully!`;
-          setTimeout(() => this.redirectToListUsers(), 2000);
+          this.redirectToListUsers();
         },
         error: (err) => {
           console.error('Error creating user:', err);
