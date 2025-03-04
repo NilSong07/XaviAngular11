@@ -9,6 +9,7 @@ import { UsersService } from '@feature/users/create-user/shared/services/users/u
 })
 export class ListUsersComponent implements OnInit {
   users: any[] = [];
+  filteredUsers: any[] = [];
   searchTerm: string = '';
 
   constructor(private usersService: UsersService) {}
@@ -21,6 +22,7 @@ export class ListUsersComponent implements OnInit {
     this.usersService.getUsers().subscribe({
       next: (response) => {
         this.users = response.data;
+        this.filteredUsers = [...this.users];
       },
       error: (error) => {
         console.error('Error al obtener los usuarios:', error);
@@ -28,13 +30,20 @@ export class ListUsersComponent implements OnInit {
     });
   }
 
-  filterUsers() {
-    return this.users.filter(user =>
-      user.first_name.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+  filterUsers(name: string) {
+    this.searchTerm = name;
+
+    if (this.searchTerm.length < 3) {
+      this.filteredUsers = [...this.users];
+    } else {
+      this.filteredUsers = this.users.filter(user =>
+        user.first_name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
   }
 
-  deleteUser(userId: number) {
-    this.users = this.users.filter(user => user.id !== userId);
+  deleteUser(index: number) {
+    this.users.splice(index, 1);
+    this.filteredUsers.splice(index, 1);
   }
 }

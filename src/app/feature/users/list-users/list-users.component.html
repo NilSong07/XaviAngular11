@@ -8,6 +8,7 @@
     type="text"
     id="user-list__filter"
     [(ngModel)]="searchTerm"
+    (input)="filterUsers(searchTerm)"
     placeholder="Buscar usuario por nombre..."
   />
 
@@ -21,7 +22,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of filterUsers(); let i = index" [id]="'user-list__table-item-' + i">
+      <tr *ngFor="let user of filterUsers; let i = index" [id]="'user-list__table-item-' + i">
         <td>
           <img [src]="user.avatar" [id]="'user-list__table-item-' + i + '-avatar'" alt="Avatar de {{ user.first_name }}">
         </td>
@@ -32,7 +33,7 @@
           {{ user.email }}
         </td>
         <td>
-          <button id="'user-list__table-item-' + i + '-btn-delete'" (click)="deleteUser(user.id)">
+          <button [id]="'user-list__table-item-' + i + '-btn-delete'" (click)="deleteUser(i)">
             Eliminar
           </button>
         </td>
