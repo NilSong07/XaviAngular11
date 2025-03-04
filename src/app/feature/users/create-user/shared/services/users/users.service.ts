@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 /**
@@ -15,17 +15,15 @@ export class UsersService {
 
   constructor(private http: HttpClient) {}
 
-  getUsers(): Observable<any> {
-    return this.http.get<any>(this.apiUrl).pipe(
-      map(response => response)
-    );
+  getUsers(): any {
+    return this.http.get<any>(this.apiUrl).toPromise();
   }
 
-  createUser(name: string, job: string): Observable<any> {
-    return this.http.post<any>(this.apiUrl, { name, job });
+  createUser(name: string, job: string): any {
+    return this.http.post<any>(this.apiUrl, { name, job }).toPromise();
   }
 
-  deleteUserForIndex(index: number) {
-
+  deleteUserForIndex(index: number): any {
+    return this.http.delete<any>(`${this.apiUrl}/${index}`).toPromise();
   }
 }

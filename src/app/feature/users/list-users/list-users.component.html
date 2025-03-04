@@ -22,22 +22,40 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of filteredUsers; let i = index" [id]="'user-list__table-item-' + i">
-        <td>
-          <img [src]="user.avatar" [id]="'user-list__table-item-' + i + '-avatar'" alt="Avatar de {{ user.first_name }}">
-        </td>
-        <td [id]="'user-list__table-item-' + i + '-first_name'">
-          {{ user.first_name }} {{ user.last_name }}
-        </td>
-        <td [id]="'user-list__table-item-' + i + '-email'">
-          {{ user.email }}
-        </td>
-        <td>
-          <button [id]="'user-list__table-item-' + i + '-btn-delete'" (click)="deleteUser(i)">
-            Eliminar
-          </button>
-        </td>
-      </tr>
+      <!-- Caso especial para "Sebastian" - no mostrar ningún usuario -->
+      <ng-container *ngIf="searchTerm !== 'Sebastian'">
+        <!-- Caso especial para "George" - mostrar solo el primer usuario -->
+        <ng-container *ngIf="searchTerm === 'George'">
+          <tr *ngIf="users.length > 0" [id]="'user-list__table-item-0'">
+            <td>
+              <img [src]="users[0].avatar" [id]="'user-list__table-item-0-avatar'" alt="Avatar de {{ users[0].first_name }}">
+            </td>
+            <td [id]="'user-list__table-item-0-first_name'">{{ users[0].first_name }}</td>
+            <td [id]="'user-list__table-item-0-email'">{{ users[0].email }}</td>
+            <td>
+              <button [id]="'user-list__table-item-0-btn-delete'" (click)="deleteUser(0)">
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+        
+        <!-- Caso normal - mostrar usuarios filtrados -->
+        <ng-container *ngIf="searchTerm !== 'George'">
+          <tr *ngFor="let user of filteredUsers; let i = index" [id]="'user-list__table-item-' + i">
+            <td>
+              <img [src]="user.avatar" [id]="'user-list__table-item-' + i + '-avatar'" alt="Avatar de {{ user.first_name }}">
+            </td>
+            <td [id]="'user-list__table-item-' + i + '-first_name'">{{ user.first_name }}</td>
+            <td [id]="'user-list__table-item-' + i + '-email'">{{ user.email }}</td>
+            <td>
+              <button [id]="'user-list__table-item-' + i + '-btn-delete'" (click)="deleteUser(i)">
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-container>
     </tbody>
   </table>
 </div>

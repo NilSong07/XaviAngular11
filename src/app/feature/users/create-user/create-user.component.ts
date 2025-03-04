@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsersService } from '@feature/users/create-user/shared/services/users/users.service';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-create-user',
@@ -20,18 +21,16 @@ export class CreateUserComponent implements OnInit {
     private readonly usersService: UsersService
   ) {}
 
-  ngOnInit(): void {}
-
-  get isFormInvalid(): boolean {
-    return this.name.trim().length === 0 || this.job.trim().length === 0;
+  ngOnInit(): void {
+    // No es necesario inicializar nada aquí
   }
 
-
   onSubmit(): void {
-    if (!this.isFormInvalid) {
-      this.usersService.createUser(this.name, this.job).subscribe({
-        next: (response) => {
-          this.successMessage = `User ${response.name} created successfully!`;
+    if (this.name.trim().length > 0 && this.job.trim().length > 0) {
+      // Convertimos la promesa a Observable usando from
+      from(Promise.resolve(this.usersService.createUser(this.name, this.job))).subscribe({
+        next: () => {
+          this.successMessage = `User created successfully!`;
           this.redirectToListUsers();
         },
         error: (err) => {

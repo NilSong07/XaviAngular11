@@ -6,20 +6,24 @@
       <label for="user-create__name">Name</label>
       <input id="user-create__name" type="text" [(ngModel)]="name" name="name" required #nameInput="ngModel" />
 
-      <span id="user-create__name-error" class="error" *ngIf="nameInput.invalid && nameInput.touched">
-        Name is required
-      </span>
+      <ng-container *ngIf="name.trim().length === 0">
+        <div id="user-create__name-error" class="error">
+          Name is required
+        </div>
+      </ng-container>
     </div>
 
     <div class="form-group">
       <label for="user-create__job">Job</label>
       <input id="user-create__job" type="text" [(ngModel)]="job" name="job" required #jobInput="ngModel" />
-      <span id="user-create__job-error" class="error" *ngIf="jobInput.invalid && jobInput.touched">
-        Job is required
-      </span>
+      <ng-container *ngIf="job.trim().length === 0">
+        <div id="user-create__job-error" class="error">
+          Job is required
+        </div>
+      </ng-container>
     </div>
 
-    <button id="user-create__btn-create" type="submit" [disabled]="isFormInvalid">
+    <button id="user-create__btn-create" type="submit" [disabled]="name.trim().length === 0 || job.trim().length === 0">
       Create User
     </button>
   </form>
