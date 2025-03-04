@@ -4,14 +4,8 @@
   <form (ngSubmit)="onSubmit()" #userForm="ngForm">
     <div class="form-group">
       <label for="user-create__name">Name</label>
-      <input
-        id="user-create__name"
-        type="text"
-        [(ngModel)]="name"
-        name="name"
-        required
-        #nameInput="ngModel"
-      />
+      <input id="user-create__name" type="text" [(ngModel)]="name" name="name" required #nameInput="ngModel" />
+
       <span id="user-create__name-error" class="error" *ngIf="nameInput.invalid && nameInput.touched">
         Name is required
       </span>
@@ -19,24 +13,13 @@
 
     <div class="form-group">
       <label for="user-create__job">Job</label>
-      <input
-        id="user-create__job"
-        type="text"
-        [(ngModel)]="job"
-        name="job"
-        required
-        #jobInput="ngModel"
-      />
+      <input id="user-create__job" type="text" [(ngModel)]="job" name="job" required #jobInput="ngModel" />
       <span id="user-create__job-error" class="error" *ngIf="jobInput.invalid && jobInput.touched">
         Job is required
       </span>
     </div>
 
-    <button
-      id="user-create__btn-create"
-      type="submit"
-      [disabled]="isFormInvalid"
-    >
+    <button id="user-create__btn-create" type="submit" [disabled]="isFormInvalid">
       Create User
     </button>
   </form>

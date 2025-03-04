@@ -23,8 +23,9 @@ export class CreateUserComponent implements OnInit {
   ngOnInit(): void {}
 
   get isFormInvalid(): boolean {
-    return !this.name.trim() || !this.job.trim();
+    return this.name.trim().length === 0 || this.job.trim().length === 0;
   }
+
 
   onSubmit(): void {
     if (!this.isFormInvalid) {
