@@ -21,8 +21,11 @@ export class ListUsersComponent implements OnInit {
   getUsers() {
     this.usersService.getUsers().subscribe({
       next: (response) => {
-        this.users = response.data;
-        this.filteredUsers = [...this.users];
+        if (response && response.data) {
+          this.users = response.data;
+        } else {
+          console.error('Formato de respuesta inesperado:', response);
+        }
       },
       error: (error) => {
         console.error('Error al obtener los usuarios:', error);
