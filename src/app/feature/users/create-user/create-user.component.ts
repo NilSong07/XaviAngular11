@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsersService } from '@feature/users/create-user/shared/services/users/users.service';
 
@@ -8,6 +9,7 @@ import { UsersService } from '@feature/users/create-user/shared/services/users/u
   styleUrls: ['./create-user.component.scss'],
 })
 export class CreateUserComponent implements OnInit {
+  @ViewChild('userForm') userForm!: NgForm;
 
   name: string = '';
   job: string = '';
@@ -16,14 +18,16 @@ export class CreateUserComponent implements OnInit {
   constructor(
     private readonly router: Router,
     private readonly usersService: UsersService
-  ) {
-  }
+  ) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  get isFormInvalid(): boolean {
+    return !this.name.trim() || !this.job.trim();
   }
 
   onSubmit(): void {
-    if (this.name && this.job) {
+    if (!this.isFormInvalid) {
       this.usersService.createUser(this.name, this.job).subscribe({
         next: (response) => {
           this.successMessage = `User ${response.name} created successfully!`;
@@ -38,7 +42,7 @@ export class CreateUserComponent implements OnInit {
 
   /**
    * Este método no se puede modificar
-   * */
+   */
   public redirectToListUsers(): void {
     this.router.navigateByUrl('/users/list');
   }
